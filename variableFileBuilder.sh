@@ -23,6 +23,6 @@ cat << EOF > variables.json
 	"sum_local": "$sum",
 	"kernel": "$kernel",
 	"display": "$display",
-	"initrd": "$initrd"
+	"init": "$initrd"
 }
 EOF
