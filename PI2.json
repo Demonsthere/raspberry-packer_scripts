@@ -1,0 +1,125 @@
+{
+    "builders": [
+    {
+        "accelerator": "tcg",
+        "boot_command": [
+        "<wait30><return><wait10><return><wait5><right><wait5><right><wait5><return><wait5><right><wait5><return><wait5>"
+        ],
+        "boot_wait": "4m",
+        "disk_interface": "virtio",
+        "disk_size": 5000,
+        "format": "qcow2",
+        "headless": false,
+        "iso_checksum": "{{user `sum_local`}}",
+        "iso_checksum_type": "md5",
+        "iso_url": "{{user `url_local`}}",
+        "net_device": "virtio-net",
+        "output_directory": "RasDerp",
+        "qemu_binary": "qemu-system-arm",
+        "qemuargs": [
+        [
+        "-m",
+        "1024"
+        ],
+        [
+        "-machine",
+        "vexpress-a9,accel=tcg"
+        ],
+        [
+        "-device",
+        "virtio-net-device,netdev=user.0"
+        ],
+        [
+        "-drive",
+        "file={{user `url_local`}},if=sd,cache=writeback"
+        ],
+        [
+        "-netdev",
+        "id=user.0,type=user"
+        ],
+        [
+        "-cpu",
+        "cortex-a9"
+        ],
+        [
+        "-kernel",
+        "{{user `kernel`}}"
+        ],
+        [
+        "-append",
+        "root=/dev/mmcblk0p2 vga=normal mem=1024M devtmpfs.mount=0 rw"
+        ],
+        [
+        "-net",
+        "nic,macaddr=00:16:3e:00:00:01"
+        ],
+        [
+        "-net",
+        "user,hostfwd=tcp::2223-:22"
+        ],
+        [
+        "-k",
+        "pl"
+        ],
+        [
+        "-display",
+        "{{user `display`}}"
+        ]
+        ],
+        "shutdown_command": "echo '{{user `password_acc`}}'|sudo poweroff",
+        "ssh_host_port_max": 2230,
+        "ssh_password": "{{user `password_acc`}}",
+        "ssh_username": "{{user `user_acc`}}",
+        "ssh_wait_timeout": "30m",
+        "type": "qemu",
+        "vm_name": "Raspbian-Forged"
+    }
+    ],
+    "provisioners": [
+    {
+        "execute_command": "echo '{{user `password_acc`}}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+        "start_retry_timeout": "5m",
+        "scripts": [
+        "scripts/raspbian/reboot.sh",
+        "scripts/common/update&upgrade.sh",
+        "scripts/common/installSoftware.sh"
+        ],
+        "type": "shell"
+        },
+        {
+            "destination": "~/client.rb",
+            "source": "files/client.rb",
+            "type": "file"
+            },
+            {
+                "destination": "~/validation.pem",
+                "source": "files/validation.pem",
+                "type": "file"
+                },
+                {
+                    "destination": "~/sources.list",
+                    "source": "files/sources.list",
+                    "type": "file"
+                    },
+                    {
+                        "execute_command": "echo '{{user `password_acc`}}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+                        "start_retry_timeout": "5m",
+                        "scripts": [
+                        "scripts/common/moveFiles.sh",
+                        "scripts/raspbian/addRepo.sh",
+                        "scripts/common/runChef.sh"
+                        ], 
+                        "type": "shell"
+                    }
+                    ],
+                    "variables": {
+                        "password_acc": "raspberry",
+                        "sum_global": "13e5b192154be6b198eb3747f38523ab",
+                        "sum_local": "a9eab6f36cc52ac75cd7d363b54558e9",
+                        "url_global": "http://vagrantimages.yrdci.fra.hybris.com/raspbian.img",
+                        "url_local": "temporary",
+                        "user_acc": "pi",
+                        "display" : "none",
+                        "kernel" : "kernel-3.16.5"
+                    }
+                }
