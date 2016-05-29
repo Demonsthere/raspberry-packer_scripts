@@ -89,7 +89,9 @@
             "execute_command": "echo '{{user `password_acc`}}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
             "start_retry_timeout": "5m",
             "scripts": [
-                "scripts/common/hello_world.sh"
+                "scripts/common/update&upgrade.sh",
+                "scripts/raspbian/install_packages.sh",
+                "scripts/raspbian/get_docker.sh"
             ],
             "type": "shell"
         }
