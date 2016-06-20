@@ -38,7 +38,7 @@
                 ],
                 [
                     "-append",
-                    "root=/dev/mmcblk0p2 mem=1024M devtmpfs.mount=0 rw vga=normal"
+                    "root=/dev/mmcblk0p2 mem=1024M devtmpfs.mount=0 rw console=ttyAMA0 console=ttyS0"
                 ],
                 [
                     "-name",
@@ -71,6 +71,10 @@
                 [
                     "-display",
                     "{{user `display`}}"
+                ],
+                [
+                    "-serial",
+                    "stdio"
                 ]
             ],
             "shutdown_command": "echo '{{user `password`}}'|sudo poweroff",
