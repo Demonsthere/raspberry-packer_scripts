@@ -77,7 +77,7 @@
                     "stdio"
                 ]
             ],
-            "shutdown_command": "echo '{{user `password`}}'|sudo poweroff",
+            "shutdown_command": "echo '{{user `password`}}'| sudo poweroff",
             "ssh_host_port_min": 2223,
             "ssh_host_port_max": 2223,
             "ssh_port": 22,
