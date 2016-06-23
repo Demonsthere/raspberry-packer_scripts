@@ -77,7 +77,7 @@
                 ]
             ],
             "shutdown_command": "echo '{{user `password`}}' | sudo shutdown -r",
-            "shutdown_timer":"3m",
+            "shutdown_timeout":"3m",
             "ssh_host_port_min": 2223,
             "ssh_host_port_max": 2223,
             "ssh_port": 22,
