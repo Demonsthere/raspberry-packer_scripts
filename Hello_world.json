@@ -73,11 +73,11 @@
                     "{{user `display`}}"
                 ],
                 [
-                    "-serial",
-                    "stdio"
+                    "--no-reboot"
                 ]
             ],
-            "shutdown_command": "echo '{{user `password`}}' | sudo poweroff",
+            "shutdown_command": "echo '{{user `password`}}' | sudo shutdown -r",
+            "shutdown_timer":"3m",
             "ssh_host_port_min": 2223,
             "ssh_host_port_max": 2223,
             "ssh_port": 22,
