@@ -6,3 +6,5 @@ echo '----> uname'
 uname -a
 echo '----> lsb data'
 lsb_release -a
+echo '----> disc space'
+df -h

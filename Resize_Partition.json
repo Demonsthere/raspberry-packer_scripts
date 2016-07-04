@@ -71,12 +71,9 @@
                 [
                     "-display",
                     "{{user `display`}}"
-                ],
-                [
-                    "--no-reboot"
                 ]
             ],
-            "shutdown_command": "echo '{{user `password`}}' | sudo shutdown -r",
+            "shutdown_command": "echo '{{user `password`}}' | sudo poweroff",
             "shutdown_timeout":"3m",
             "ssh_host_port_min": 2223,
             "ssh_host_port_max": 2223,
@@ -93,6 +90,9 @@
             "execute_command": "echo '{{user `password_acc`}}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
             "start_retry_timeout": "5m",
             "scripts": [
+                "scripts/utility/rebuild_partiiton.sh",
+                "scripts/manage/reboot.sh",
+                "scripts/utility/resize_partition.sh",
                 "scripts/utility/hello_world.sh"
             ],
             "type": "shell"
