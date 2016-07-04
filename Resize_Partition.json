@@ -42,7 +42,7 @@
                 ],
                 [
                     "-name",
-                    "Qemu-hello_world"
+                    "Qemu-preatition_rebuilt"
                 ],
                 [
                     "-drive",
@@ -90,6 +90,7 @@
             "execute_command": "echo '{{user `password_acc`}}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
             "start_retry_timeout": "5m",
             "scripts": [
+                "scripts/utility/hello_world.sh",
                 "scripts/utility/rebuild_partition.sh",
                 "scripts/manage/reboot.sh",
                 "scripts/utility/resize_partition.sh",
