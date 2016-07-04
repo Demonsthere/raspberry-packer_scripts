@@ -4,7 +4,7 @@
             "accelerator": "tcg",
             "boot_command": [
             ],
-            "boot_wait": "5m",
+            "boot_wait": "2m",
             "disk_interface": "virtio",
             "disk_size": 5000,
             "format": "qcow2",
@@ -90,7 +90,7 @@
             "execute_command": "echo '{{user `password_acc`}}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
             "start_retry_timeout": "5m",
             "scripts": [
-                "scripts/utility/rebuild_partiiton.sh",
+                "scripts/utility/rebuild_partition.sh",
                 "scripts/manage/reboot.sh",
                 "scripts/utility/resize_partition.sh",
                 "scripts/utility/hello_world.sh"
