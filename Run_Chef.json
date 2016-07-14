@@ -1,0 +1,127 @@
+{
+    "builders": [
+        {
+            "accelerator": "tcg",
+            "boot_command": [
+            ],
+            "boot_wait": "5m",
+            "disk_interface": "virtio",
+            "disk_size": 5000,
+            "format": "qcow2",
+            "headless": false,
+            "iso_checksum": "{{user `sum_local`}}",
+            "iso_checksum_type": "md5",
+            "iso_url": "{{user `url_local`}}",
+            "net_device": "virtio-net",
+            "output_directory": "hello_world",
+            "qemu_binary": "qemu-system-arm",
+            "qemuargs": [
+                [
+                    "-m",
+                    "1024"
+                ],
+                [
+                    "-boot",
+                    "order=ncd"
+                ],
+                [
+                    "-machine",
+                    "vexpress-a9,accel=tcg"
+                ],
+                [
+                    "-cpu",
+                    "cortex-a9"
+                ],
+                [
+                    "-kernel",
+                    "{{user `kernel`}}"
+                ],
+                [
+                    "-append",
+                    "root=/dev/mmcblk0p2 mem=1024M devtmpfs.mount=0 rw"
+                ],
+                [
+                    "-name",
+                    "Qemu-hello_world"
+                ],
+                [
+                    "-drive",
+                    "file={{user `url_local`}},if=sd,cache=writeback"
+                ],
+                [
+                    "-net",
+                    "nic,macaddr=00:16:3e:00:00:01"
+                ],
+                [
+                    "-netdev",
+                    "id=user.0,type=user"
+                ],
+                [
+                    "-net",
+                    "user,hostfwd=tcp::2223-:22"
+                ],
+                [
+                    "-device",
+                    "virtio-net-device,netdev=user.0"
+                ],
+                [
+                    "-initrd",
+                    "{{user `init`}}"
+                ],
+                [
+                    "-display",
+                    "{{user `display`}}"
+                ],
+                [
+                    "--no-reboot"
+                ]
+            ],
+            "shutdown_command": "echo '{{user `password`}}' | sudo shutdown -r",
+            "shutdown_timeout":"3m",
+            "ssh_host_port_min": 2223,
+            "ssh_host_port_max": 2223,
+            "ssh_port": 22,
+            "ssh_password": "raspberry",
+            "ssh_username": "pi",
+            "ssh_wait_timeout": "30m",
+            "type": "qemu",
+            "vm_name": "Raspbian-Forged"
+        }
+    ],
+    "provisioners": [
+        {
+            "execute_command": "echo '{{user `password_acc`}}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+            "start_retry_timeout": "5m",
+            "scripts": [
+                "scripts/utility/hello_world.sh"
+            ],
+            "type": "shell"
+        },
+        {
+            "type": "file",
+            "source": "files/init_node.json",
+            "destination": "/tmp/init_node.json"
+        },
+        {
+            "type": "file",
+            "source": "files/client.rb",
+            "destination": "/etc/chef/client.rb"
+        },
+        {
+            "type": "chef-client",
+            "server_url": "https://chef.pitux.ovh",
+            "ssl_verify_mode": "verify_none",
+            "validation_key" "files/validation.pem"
+            "execute_command": "sudo chef-client --once -j /tmp/init_node.json"
+        }
+    ],
+    "variables": {
+        "password": "raspberry",
+        "sum_local": "temporary",
+        "url_local": "temporary",
+        "user": "pi",
+        "display" : "none",
+        "kernel" : "temporary",
+        "init" : "temporary"
+    }
+}
