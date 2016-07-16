@@ -112,12 +112,26 @@
             "inline" : ["echo '{{user `password_acc`}}' | sudo mv /tmp/client.rb /etc/chef/"]  
         },
         {
-            "type": "chef-client",
-            "server_url": "https://chef.pitux.ovh",
-            "ssl_verify_mode": "verify_none",
-            "validation_key_path" : "files/validation.pem",
-            "skip_install" : "true",
-            "execute_command": "sudo chef-client --once -j /tmp/init_node.json"
+            "type": "file",
+            "source": "files/client.pem",
+            "destination": "/tmp/client.pem"
+        },
+        {
+            "type" : "shell",
+            "inline" : ["echo '{{user `password_acc`}}' | sudo mv /tmp/client.pem /etc/chef/"]  
+        },
+        {
+            "type": "file",
+            "source": "files/validation.pem",
+            "destination": "/tmp/validation.pem"
+        },
+        {
+            "type" : "shell",
+            "inline" : ["echo '{{user `password_acc`}}' | sudo mv /tmp/validation.pem /etc/chef/"]  
+        },
+        {
+            "type" : "shell",
+            "inline" : ["echo '{{user `password_acc`}}' | sudo chef-client --once -j /tmp/init_node.json"]  
         }
     ],
     "variables": {
