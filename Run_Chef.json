@@ -114,7 +114,7 @@
         {
             "type" : "shell",
             "inline" : ["echo '{{user `password_acc`}}' | sudo mv /tmp/client.rb /etc/chef/"]  
-        }
+        },
         {
             "type": "chef-client",
             "server_url": "https://chef.pitux.ovh",
