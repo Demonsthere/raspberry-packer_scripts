@@ -104,13 +104,17 @@
         },
         {
             "type" : "shell",
-            "inline" : ["mkdir -p /etc/chef"]
+            "inline" : ["echo '{{user `password_acc`}}' | sudo mkdir -p /etc/chef"]
         },
         {
             "type": "file",
             "source": "files/client.rb",
-            "destination": "/etc/chef/client.rb"
+            "destination": "/tmp/client.rb"
         },
+        {
+            "type" : "shell",
+            "inline" : ["echo '{{user `password_acc`}}' | sudo mv /tmp/client.rb /etc/chef/"]  
+        }
         {
             "type": "chef-client",
             "server_url": "https://chef.pitux.ovh",
