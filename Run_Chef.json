@@ -93,7 +93,7 @@
             "execute_command": "echo '{{user `password_acc`}}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
             "start_retry_timeout": "5m",
             "scripts": [
-                "scripts/utility/hello_world.sh"
+                "scripts/software/get_chef.sh"
             ],
             "type": "shell"
         },
@@ -101,10 +101,6 @@
             "type": "file",
             "source": "files/init_node.json",
             "destination": "/tmp/init_node.json"
-        },
-        {
-            "type" : "shell",
-            "inline" : ["echo '{{user `password_acc`}}' | sudo mkdir -p /etc/chef"]
         },
         {
             "type": "file",
@@ -120,7 +116,7 @@
             "server_url": "https://chef.pitux.ovh",
             "ssl_verify_mode": "verify_none",
             "validation_key_path" : "files/validation.pem",
-            "skip_install" : "false",
+            "skip_install" : "true",
             "execute_command": "sudo chef-client --once -j /tmp/init_node.json"
         }
     ],
