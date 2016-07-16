@@ -111,7 +111,7 @@
             "type": "chef-client",
             "server_url": "https://chef.pitux.ovh",
             "ssl_verify_mode": "verify_none",
-            "validation_key" : "files/validation.pem",
+            "validation_key_path" : "files/validation.pem",
             "execute_command": "sudo chef-client --once -j /tmp/init_node.json"
         }
     ],
