@@ -103,6 +103,10 @@
             "destination": "/tmp/init_node.json"
         },
         {
+            "type" : "shell",
+            "inline" : ["mkdir -p /etc/chef"]
+        },
+        {
             "type": "file",
             "source": "files/client.rb",
             "destination": "/etc/chef/client.rb"
@@ -112,6 +116,7 @@
             "server_url": "https://chef.pitux.ovh",
             "ssl_verify_mode": "verify_none",
             "validation_key_path" : "files/validation.pem",
+            "skip_install" : "false",
             "execute_command": "sudo chef-client --once -j /tmp/init_node.json"
         }
     ],
