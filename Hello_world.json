@@ -54,7 +54,7 @@
                 ],
                 [
                     "-netdev",
-                    "id=user.0,type=user"
+                    "user,id=user.0"
                 ],
                 [
                     "-net",
