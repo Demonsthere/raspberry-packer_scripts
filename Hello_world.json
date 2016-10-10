@@ -71,19 +71,16 @@
                 [
                     "-display",
                     "{{user `display`}}"
-                ],
-                [
-                    "--no-reboot"
                 ]
             ],
-            "shutdown_command": "echo '{{user `password`}}' | sudo shutdown -r",
-            "shutdown_timeout":"3m",
+            "shutdown_command": "echo '{{user `password`}}' | sudo shutdown now",
+            "shutdown_timeout":"5m",
             "ssh_host_port_min": 2223,
             "ssh_host_port_max": 2223,
             "ssh_port": 22,
             "ssh_password": "raspberry",
             "ssh_username": "pi",
-            "ssh_wait_timeout": "30m",
+            "ssh_wait_timeout": "10m",
             "type": "qemu",
             "vm_name": "Raspbian-Forged"
         }
