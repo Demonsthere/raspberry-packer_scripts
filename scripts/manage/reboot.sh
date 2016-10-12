@@ -1,3 +1,3 @@
 #!/bin/bash -x
-reboot 
-sleep 240
+reboot
+sleep 300

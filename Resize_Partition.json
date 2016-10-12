@@ -88,7 +88,7 @@
     "provisioners": [
         {
             "execute_command": "echo '{{user `password_acc`}}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
-            "start_retry_timeout": "5m",
+            "start_retry_timeout": "10m",
             "scripts": [
                 "scripts/utility/hello_world.sh",
                 "scripts/utility/rebuild_partition.sh",
